@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MesaController;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::resource('mesas', MesaController::class);
+Route::resource('productos', ProductoController::class);
+Route::resource('categorias', CategoriaController::class);
