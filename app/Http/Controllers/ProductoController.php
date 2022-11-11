@@ -14,8 +14,11 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        return Producto::get();
+
         //
     }
+
 
     /**
      * Show the form for creating a new resource.

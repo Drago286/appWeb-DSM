@@ -14,7 +14,15 @@ class CategoriaController extends Controller
      */
     public function index()
     {
+        return Categoria::get();
+
         //
+    }
+
+    public function obtenerNombreCategoria($id)
+    {
+        $categoria = Categoria::where('id', $id)->FirstOrFail();
+        return $categoria;
     }
 
     /**
