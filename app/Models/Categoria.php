@@ -17,8 +17,4 @@ class Categoria extends Model
     protected $fillable = [
         'nombre',
     ];
-
-    // protected $hidden = [
-    //     'id',
-    // ];
 }

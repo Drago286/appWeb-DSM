@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ProductoController extends Controller
 {
@@ -38,7 +39,29 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $producto = new Producto;
+        $producto->codigo = $request->codigo;
+        $producto->nombre = $request->nombre;
+        $producto->descripcion = $request->descripcion;
+        $producto->precio = $request->precio;
+        $producto->categoria_id = $request->categoria_id;
+
+
+        Producto::create([
+            'codigo' => $producto->codigo,
+            'nombre' => $producto->nombre,
+            'descripcion' => $producto->descripcion,
+            'precio' => $producto->precio,
+            'categoria_id' => $producto->categoria_id,
+
+
+
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Producto agregado successfully',
+        ]);
     }
 
     /**
@@ -72,7 +95,28 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $producto = Producto::where('id', $request->id)->FirstOrFail();
+
+        // $request->validate([
+
+        //     'codigo' => ['required', 'string', 'min:2'],
+        //     'nombre' => ['required', 'string', 'min:2'],
+        //     'descripcion' => ['required', 'string', 'min:10'],
+        //     'precio' => ['required', 'integer', 'max:255'],
+        //     'categoria_id' => ['required', 'integer', 'min:1'],
+
+        // ]);
+        //$producto->codigo = $request->codigo;
+        $producto->nombre = $request->nombre;
+        $producto->descripcion = $request->descripcion;
+        $producto->precio = $request->precio;
+        $producto->categoria_id = $request->categoria_id;
+        $producto->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Producto editado successfully',
+        ]);
     }
 
     /**
@@ -83,6 +127,8 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        // $producto = Producto::where('id', $request->id)->FirstOrFail();
+
+        $producto->delete();
     }
 }

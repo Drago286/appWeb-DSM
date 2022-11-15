@@ -23,4 +23,3 @@ use Illuminate\Support\Facades\Route;
 Route::resource('mesas', MesaController::class);
 Route::resource('productos', ProductoController::class);
 Route::resource('categorias', CategoriaController::class);
-Route::get('/nombreCategoria/{id}', [CategoriaController::class, 'obtenerNombreCategoria'])->name('obtenerNombreCategoria');
