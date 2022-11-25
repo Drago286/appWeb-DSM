@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast;
 
 class CategoriaController extends Controller
 {
@@ -43,7 +44,18 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categoria = new Categoria;
+        $categoria->nombre = $request->nombre;
+
+
+        Categoria::create([
+            'nombre' => $categoria->nombre,
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'categoria agregado successfully',
+        ]);
     }
 
     /**
@@ -77,7 +89,15 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
+        $categoria = Categoria::where('id', $request->id)->FirstOrFail();
+
+        $categoria->nombre = $request->nombre;
+        $categoria->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'categoria editada successfully',
+        ]);
     }
 
     /**
@@ -88,6 +108,6 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        $categoria->delete();
     }
 }

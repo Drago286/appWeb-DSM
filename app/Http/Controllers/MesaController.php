@@ -38,7 +38,18 @@ class MesaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mesa = new Mesa;
+        $mesa->numero = $request->numero;
+
+
+        Mesa::create([
+            'numero' => $mesa->numero,
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'mesa agregada successfully',
+        ]);
     }
 
     /**
@@ -72,7 +83,15 @@ class MesaController extends Controller
      */
     public function update(Request $request, Mesa $mesa)
     {
-        //
+        $mesa = Mesa::where('id', $request->id)->FirstOrFail();
+
+        $mesa->numero = $request->numero;
+        $mesa->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'mesa editada successfully',
+        ]);
     }
 
     /**

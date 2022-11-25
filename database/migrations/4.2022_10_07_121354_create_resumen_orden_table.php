@@ -13,8 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('resumen_orden', function (Blueprint $table) {
+        Schema::create('resumen_ordens', function (Blueprint $table) {
             $table->id();
+
+            $table->integer('montoTotal');
+
+            $table->unsignedBigInteger('mesa_id');
+
+            $table->foreign('mesa_id')->references('id')->on('mesas');
+
             $table->timestamps();
         });
     }

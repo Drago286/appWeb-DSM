@@ -45,6 +45,7 @@ class ProductoController extends Controller
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
         $producto->categoria_id = $request->categoria_id;
+        $producto->stock = $request->stock;
 
 
         Producto::create([
@@ -52,9 +53,8 @@ class ProductoController extends Controller
             'nombre' => $producto->nombre,
             'descripcion' => $producto->descripcion,
             'precio' => $producto->precio,
+            'stock' => $producto->stock,
             'categoria_id' => $producto->categoria_id,
-
-
 
         ]);
 
@@ -96,21 +96,13 @@ class ProductoController extends Controller
     public function update(Request $request, Producto $producto)
     {
         $producto = Producto::where('id', $request->id)->FirstOrFail();
-
-        // $request->validate([
-
-        //     'codigo' => ['required', 'string', 'min:2'],
-        //     'nombre' => ['required', 'string', 'min:2'],
-        //     'descripcion' => ['required', 'string', 'min:10'],
-        //     'precio' => ['required', 'integer', 'max:255'],
-        //     'categoria_id' => ['required', 'integer', 'min:1'],
-
-        // ]);
-        //$producto->codigo = $request->codigo;
         $producto->nombre = $request->nombre;
         $producto->descripcion = $request->descripcion;
         $producto->precio = $request->precio;
+        $producto->stock = $request->stock;
         $producto->categoria_id = $request->categoria_id;
+
+
         $producto->save();
 
         return response()->json([

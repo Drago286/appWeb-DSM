@@ -12,6 +12,4 @@ class Mesa extends Model
     protected $table = 'mesas';
 
     protected $fillable = ['numero'];
-
-    protected $hidden = ['id'];
 }
