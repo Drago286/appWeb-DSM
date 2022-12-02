@@ -27,3 +27,6 @@ Route::resource('productos', ProductoController::class);
 Route::resource('categorias', CategoriaController::class);
 Route::resource('resumen_ordens', ResumenOrdenController::class);
 Route::resource('resumen_orden_productos', ResumenOrdenProductoController::class);
+//Route::resource('saveOrder', ResumenOrdenController::class);
+
+Route::post('saveOrder', [ResumenOrdenController::class, 'saveOrder']);

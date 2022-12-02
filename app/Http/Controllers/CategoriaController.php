@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Cast;
 
 class CategoriaController extends Controller
@@ -44,18 +46,32 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $categoria = new Categoria;
-        $categoria->nombre = $request->nombre;
+        $data =  $request->validate(['name' => 'required:unique:categorias']);
 
 
-        Categoria::create([
-            'nombre' => $categoria->nombre,
-        ]);
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'categoria agregado successfully',
-        ]);
+        //   $categoria = new Categoria;
+        //     $categoria->nombre = $request->nombre;
+
+
+        try {
+            DB::beginTransaction();
+            Categoria::create($data);
+            DB::commit();
+            return response()->json([
+                'status' => 200,
+                'message' => 'categoria agregado successfully',
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+
+        // Categoria::create([
+        //     'nombre' => $categoria->nombre,
+        // ]);
+
+
     }
 
     /**
