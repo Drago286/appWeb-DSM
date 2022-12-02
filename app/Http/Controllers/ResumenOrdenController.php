@@ -33,27 +33,20 @@ class ResumenOrdenController extends Controller
 
         $arr = [
             'order' => [
-                'mesa_id' => $request->mesa_id,
+
                 'montoTotal' => $request->montoTotal,
+                'mesa_id' => $request->mesa_id,
+
             ],
             'detallesOrden' => $request->resumen_orden_productos
-            //     [
-            //         'producto_id'=>,
-            //         'cantidad'=>4
-            //     ],
-            //     [
-            //         'producto_id'=>4,
-            //         'cantidad'=>1
-            //     ]
-            //     $request->resumen
-            // ]
+
         ];
 
-        $order = Resumen_orden::create([$arr['order']]);
+        $order = Resumen_orden::create($arr['order']);
         $detallesOrden = $request->resumen_orden_productos;
         foreach ($detallesOrden as $detalle) {
             Resumen_orden_producto::create([
-                'orden' => $order->id,
+                'resumen_orden_id' => $order->id,
                 'producto_id' => $detalle['producto_id'],
                 'cantidad' => $detalle['cantidad']
             ]);
