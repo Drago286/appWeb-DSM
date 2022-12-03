@@ -46,7 +46,7 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $data =  $request->validate(['name' => 'required:unique:categorias']);
+        $data =  $request->validate(['nombre' => 'required:unique:categorias']);
 
 
 
