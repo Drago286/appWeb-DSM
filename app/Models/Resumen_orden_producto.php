@@ -23,14 +23,11 @@ class Resumen_orden_producto extends Model
 
     public function productoId()
     {
-
         return $this->belongsTo(Producto::class, 'producto_id');;
     }
 
-
     public function resumen_orden_id()
     {
-
         return $this->belongsTo(Resumen_orden::class, 'resumen_orden_id');;
     }
 }
