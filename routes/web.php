@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ResumenOrdenController;
+use GrahamCampbell\ResultType\Result;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('administrarOrdenes');
+// });
+
+Route::resource('/', ResumenOrdenController::class);
+Route::get('/detalleOrden', [ResumenOrdenController::class, 'detallesOrden']);
+
+
+// Route::get('/Pedidos', [ResumenOrdenController::class, 'listar_pedidos'])->name('listar_pedidos');
+// Route::post('/change/state', [ResumenOrdenController::class, 'atender_orden'])->name('atender_orden');
