@@ -16,18 +16,25 @@
 </head>
 
 <body>
-
-    <div id="nav">
-        <div class="titulonav">
-            Filtrar
+    <a class="btn btn-primary " data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+        aria-controls="offcanvasExample">
+        Filtra pedidos
+    </a>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Opciones:</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-
-        <div class="cuerporec">
-            <ul>
+        <div class="offcanvas-body">
+            <div>
+                Por favor, seleccione una opcion para filtrar los pedidos disponibles.
+            </div>
+            <div class="dropdown mt-3">
                 <li><a href="#">Todos los pedidos</a></li>
                 <li><a href="#">Pedidos pendientes</a></li>
-                <li><a href="#">Pedidos Finalizados</a></li>
-            </ul>
+                <li><a href="#">Pedidos finalizados</a></li>
+
+            </div>
         </div>
     </div>
 
@@ -42,6 +49,7 @@
                             <tr>
                                 <th>Numero de pedido</th>
                                 <th>Numero de mesa</th>
+
                                 <th>Monto Total</th>
                                 <th>Ver detalle</th>
                                 <th>Asignar Tiempo</th>
@@ -51,8 +59,9 @@
                         <tbody>
                             @foreach ($resumen_pedidos as $pedido)
                                 <tr>
-                                    <td>{{ $pedido->id }}</td>
-                                    <td>{{ $pedido->mesa_id }}</td>
+                                    <td>#{{ $pedido->id }}</td>
+                                    <td>Mesa: N°{{ $pedido->mesa_id }}</td>
+
                                     <td>${{ $pedido->montoTotal }}</td>
                                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#Modal-{{ $pedido->id }}">Ver detalle</button></td>
@@ -73,9 +82,10 @@
 
                                                 <div>Productos:</div>
                                                 @foreach ($pedido->detallesOrden as $detalle)
-                                                    <div>{{ $detalle->cantidad }}x {{ $detalle->productoId->nombre }}
-                                                        Monto: ${{ $detalle->productoId->precio * $detalle->cantidad }}
-                                                    </div>
+                                                    <p>{{ $detalle->cantidad }}x  {{ $detalle->productoId->nombre }}
+                                                        || Monto: ${{ $detalle->productoId->precio * $detalle->cantidad }}
+                                                        || SG: {{$detalle->productoId->codigo}}
+                                                    </p>
                                                 @endforeach
 
                                                 <div class="mt-3">Total: ${{ $pedido->montoTotal }}</div>

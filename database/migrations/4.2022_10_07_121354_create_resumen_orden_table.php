@@ -20,6 +20,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger('mesa_id');
 
+            $table->enum('estado', ['PENDIENTE', 'EN PREPARACION', 'FINALIZADA']);
+
+
             $table->foreign('mesa_id')->references('id')->on('mesas');
 
             $table->timestamps();
