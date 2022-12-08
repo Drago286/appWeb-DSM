@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('nombre')->unique();;
             $table->binary('imagen')->nullable();
             $table->string('descripcion');
-            $table->integer('precio');
-            $table->integer('stock');
+            $table->unsignedBigInteger('precio');
+            $table->unsignedBigInteger('stock');
             $table->timestamps();
 
             $table->unsignedBigInteger('categoria_id');

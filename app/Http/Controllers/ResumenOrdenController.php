@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Resumen_orden;
+use App\Models\Producto;
 use App\Models\Resumen_orden_producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,26 +22,6 @@ class ResumenOrdenController extends Controller
 
         ]);
     }
-
-    //  public function detallesOrden(int $idOrden)
-    //  {
-    //     $orden=Resumen_orden::find($idOrden);
-    //     $detallesOrden=$orden->detallesOrden;
-
-    //     foreach($detallesOrden as $orden_){
-    //         $element=[];
-
-    //         $element['cantidad']=$orden_->cant;
-
-
-    //     }
-
-    //     return response()->json($detallesOrden)
-    // }
-    // public function listar_pedidos()
-    // {
-
-    // }
 
     public function detallesOrden(int $resumen_orden_id)
     {
@@ -70,6 +51,7 @@ class ResumenOrdenController extends Controller
 
                 'montoTotal' => $request->montoTotal,
                 'mesa_id' => $request->mesa_id,
+                'estado' => $request->estado
 
             ],
             'detallesOrden' => $request->resumen_orden_productos
@@ -79,6 +61,9 @@ class ResumenOrdenController extends Controller
         $order = Resumen_orden::create($arr['order']);
         $detallesOrden = $request->resumen_orden_productos;
         foreach ($detallesOrden as $detalle) {
+            $producto = Producto::where('id', $detalle['producto_id'],)->FirstOrFail();
+            $producto->stock = $producto->stock - $detalle['cantidad'];
+            $producto->save();
             Resumen_orden_producto::create([
                 'resumen_orden_id' => $order->id,
                 'producto_id' => $detalle['producto_id'],

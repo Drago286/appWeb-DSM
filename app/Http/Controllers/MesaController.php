@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MesaResourse;
 use App\Models\Mesa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MesaController extends Controller
 {
@@ -38,14 +39,19 @@ class MesaController extends Controller
      */
     public function store(Request $request)
     {
-        $mesa = new Mesa;
-        $mesa->numero = $request->numero;
-
-
-        Mesa::create([
-            'numero' => $mesa->numero,
+        $validator = Validator::make($request->all(), [
+            'numero' => 'required|unique:mesas',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 100,
+                'message' => $validator->errors(),
+            ]);
+        }
+        Mesa::create([
+            'numero' => $request->numero,
+        ]);
         return response()->json([
             'status' => 200,
             'message' => 'mesa agregada successfully',
@@ -83,6 +89,17 @@ class MesaController extends Controller
      */
     public function update(Request $request, Mesa $mesa)
     {
+        $validator = Validator::make($request->all(), [
+            'numero' => 'required|unique:mesas',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 100,
+                'message' => $validator->errors(),
+            ]);
+        }
+
         $mesa = Mesa::where('id', $request->id)->FirstOrFail();
 
         $mesa->numero = $request->numero;
@@ -90,7 +107,7 @@ class MesaController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'mesa editada successfully',
+            'message' => 'categoria editada successfully',
         ]);
     }
 
@@ -102,6 +119,11 @@ class MesaController extends Controller
      */
     public function destroy(Mesa $mesa)
     {
-        //
+        $mesa->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Mesa eliminada successfully',
+        ]);
     }
 }

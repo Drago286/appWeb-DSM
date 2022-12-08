@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <a class="btn btn-primary " data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+    <a class="btn btn-primary ml-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
         aria-controls="offcanvasExample">
         Filtra pedidos
     </a>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="container">
-        <h4>Resumen de pedidos</h4>
+        <h4 class ="mt-3">Resumen de pedidos</h4>
         <div class="row">
             <div class="col-xl-12">
                 <div class="table-responsive">
@@ -66,7 +66,8 @@
                                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#Modal-{{ $pedido->id }}">Ver detalle</button></td>
 
-                                    <td><button>Asignar Tiempo</button></td>
+                                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#Tiempo-{{ $pedido->id }}">Atender</button></td>
                                 </tr>
                                 <div class="modal fade" id="Modal-{{ $pedido->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -92,8 +93,29 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                    data-bs-dismiss="modal">Cerrar</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="Tiempo-{{ $pedido->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Por favor indique el tiempo de preparacion del pedido:</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <input type="numeric" placeholder="Tiempo de preparación">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary">Atender pedido</button>
                                             </div>
                                         </div>
                                     </div>

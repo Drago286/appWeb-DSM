@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
+
 
 class ProductoController extends Controller
 {
@@ -39,24 +41,55 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $producto = new Producto;
-        $producto->codigo = $request->codigo;
-        $producto->nombre = $request->nombre;
-        $producto->descripcion = $request->descripcion;
-        $producto->precio = $request->precio;
-        $producto->categoria_id = $request->categoria_id;
-        $producto->stock = $request->stock;
-
-
-        Producto::create([
-            'codigo' => $producto->codigo,
-            'nombre' => $producto->nombre,
-            'descripcion' => $producto->descripcion,
-            'precio' => $producto->precio,
-            'stock' => $producto->stock,
-            'categoria_id' => $producto->categoria_id,
+        $validator = Validator::make($request->all(), [
+            'codigo' => 'required|unique:productos',
+            'nombre' => 'required|unique:productos',
+            'descripcion' => 'required',
+            'precio' => 'required|min:1',
+            'stock' => 'required|min:1',
+            'categoria_id' => 'required',
 
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 100,
+                'message' => $validator->errors(),
+            ]);
+        }
+        Producto::create([
+            'codigo' => $request->codigo,
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
+            'stock' => $request->stock,
+            'categoria_id' => $request->categoria_id,
+        ]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'producto agregado successfully',
+        ]);
+
+
+
+        // $producto = new Producto;
+        // $producto->codigo = $request->codigo;
+        // $producto->nombre = $request->nombre;
+        // $producto->descripcion = $request->descripcion;
+        // $producto->precio = $request->precio;
+        // $producto->categoria_id = $request->categoria_id;
+        // $producto->stock = $request->stock;
+
+
+        // Producto::create([
+        //     'codigo' => $producto->codigo,
+        //     'nombre' => $producto->nombre,
+        //     'descripcion' => $producto->descripcion,
+        //     'precio' => $producto->precio,
+        //     'stock' => $producto->stock,
+        //     'categoria_id' => $producto->categoria_id,
+
+        // ]);
 
         return response()->json([
             'status' => 200,
@@ -119,8 +152,13 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        // $producto = Producto::where('id', $request->id)->FirstOrFail();
+        //$producto = Producto::where('id', $request->id)->FirstOrFail();
 
         $producto->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Producto eliminado successfully',
+        ]);
     }
 }

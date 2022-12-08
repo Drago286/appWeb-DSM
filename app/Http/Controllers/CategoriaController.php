@@ -7,6 +7,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Cast;
+use Illuminate\Support\Facades\Validator;
+
 
 class CategoriaController extends Controller
 {
@@ -46,7 +48,23 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $data =  $request->validate(['nombre' => 'required:unique:categorias']);
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|unique:categorias',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 100,
+                'message' => $validator->errors(),
+            ]);
+        }
+        Categoria::create([
+            'nombre' => $request->nombre,
+        ]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'categoria agregado successfully',
+        ]);
 
 
 
@@ -54,18 +72,18 @@ class CategoriaController extends Controller
         //     $categoria->nombre = $request->nombre;
 
 
-        try {
-            DB::beginTransaction();
-            Categoria::create($data);
-            DB::commit();
-            return response()->json([
-                'status' => 200,
-                'message' => 'categoria agregado successfully',
-            ]);
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw new Exception($e->getMessage());
-        }
+        // try {
+        //     DB::beginTransaction();
+        //     Categoria::create($data);
+        //     DB::commit();
+        //     return response()->json([
+        //         'status' => 200,
+        //         'message' => 'categoria agregado successfully',
+        //     ]);
+        // } catch (Exception $e) {
+        //     DB::rollBack();
+        //     throw new Exception($e->getMessage());
+        // }
 
         // Categoria::create([
         //     'nombre' => $categoria->nombre,
@@ -105,6 +123,17 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|unique:categorias',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 100,
+                'message' => $validator->errors(),
+            ]);
+        }
+
         $categoria = Categoria::where('id', $request->id)->FirstOrFail();
 
         $categoria->nombre = $request->nombre;
