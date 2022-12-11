@@ -5,6 +5,8 @@ use App\Http\Controllers\MesaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ResumenOrdenController;
 use App\Http\Controllers\ResumenOrdenProductoController;
+use App\Http\Controllers\ImageUploadController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,8 @@ Route::resource('productos', ProductoController::class);
 Route::resource('categorias', CategoriaController::class);
 Route::resource('resumen_ordens', ResumenOrdenController::class);
 Route::resource('resumen_orden_productos', ResumenOrdenProductoController::class);
+Route::resource('imagens', ImageUploadController::class);
 //Route::resource('saveOrder', ResumenOrdenController::class);
 
 Route::post('saveOrder', [ResumenOrdenController::class, 'saveOrder']);
+Route::post('/upload', [ImageUploadController::class, 'uploadImage'])->name('images.upload');

@@ -64,6 +64,7 @@ class ProductoController extends Controller
             'precio' => $request->precio,
             'stock' => $request->stock,
             'categoria_id' => $request->categoria_id,
+            'imagen' => $request->imagen,
         ]);
         return response()->json([
             'status' => 200,
@@ -134,6 +135,7 @@ class ProductoController extends Controller
         $producto->precio = $request->precio;
         $producto->stock = $request->stock;
         $producto->categoria_id = $request->categoria_id;
+        $producto->imagen = $request->imagen;
 
 
         $producto->save();

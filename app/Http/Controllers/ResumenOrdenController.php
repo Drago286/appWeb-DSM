@@ -14,6 +14,7 @@ class ResumenOrdenController extends Controller
     public function index()
     {
         $resumen_pedidos = Resumen_orden::all();
+        //where('estado', 'PENDIENTE');
         //$ordenes = DB::table('resumen_orden_productos')->where('resumen_orden_id', '=', $resumen_pedidos->id)->get();
 
         return view("administrarOrdenes")->with([
@@ -75,11 +76,18 @@ class ResumenOrdenController extends Controller
     }
     public function listar_pedidos()
     {
-        $pedidos = resumen_orden::all();
 
-        return view("administrarOrdenes")->with('reumen_ordens', $pedidos);
+        $pedidos = Resumen_orden::where('estado', 'PENDIENTE')->simplePaginate(10);
+
+        return view("administrarOrdenes")->with('resumen_ordens', $pedidos);
     }
-    public function atender_orden()
+    public function atenderOrden($id)
     {
+
+        $pedido = Resumen_orden::where('id', $id)->get()->first();
+
+        $pedido->estado = 'EN PREPARACION';
+        $pedido->save();
+        return redirect(route('index'));
     }
 }

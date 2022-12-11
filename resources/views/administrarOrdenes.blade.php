@@ -99,6 +99,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                <form class="formulario" method="GET"
+                                                    action="{{ route('atenderOrden', ['id' => $pedido->id]) }}">
                                 <div class="modal fade" id="Tiempo-{{ $pedido->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -115,11 +117,12 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary">Atender pedido</button>
+                                                <button type="submit"  class="btn btn-primary">Atender pedido</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
                             @endforeach
 
                         </tbody>
@@ -131,6 +134,33 @@
     </div>
 
 </body>
+
+<script>
+    const formulariosAtender = document.getElementsByClassName("formularioAtender");
+
+    for (const form of formulariosAtender) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro que quieres atender la solicitud?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4DD091',
+                cancelButtonColor: '#FF5C77',
+                confirmButtonText: 'Confirmar',
+                cancelButtonText: 'Cancelar',
+                allowOutsideClick: false,
+
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+
+                    form.submit();
+                }
+            })
+        })
+    }
+</script>
 
 
 </html>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo')->unique();
             $table->string('nombre')->unique();;
-            $table->binary('imagen')->nullable();
+            $table->string('imagen')->nullable();
             $table->string('descripcion');
             $table->unsignedBigInteger('precio');
             $table->unsignedBigInteger('stock');

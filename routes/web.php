@@ -19,8 +19,12 @@ use Illuminate\Support\Facades\Route;
 //     return view('administrarOrdenes');
 // });
 
-Route::resource('/', ResumenOrdenController::class);
+Route::resource('/index', ResumenOrdenController::class);
+Route::get('/index', [App\Http\Controllers\ResumenOrdenController::class, 'index'])->name('index');
+
 Route::get('/detalleOrden', [ResumenOrdenController::class, 'detallesOrden']);
+Route::get('/atenderOrden/{id}', [ResumenOrdenController::class, 'atenderOrden'])->name('atenderOrden');
+
 
 
 // Route::get('/Pedidos', [ResumenOrdenController::class, 'listar_pedidos'])->name('listar_pedidos');
