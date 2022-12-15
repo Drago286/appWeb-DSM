@@ -49,7 +49,7 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|unique:categorias|min:5',
+            'nombre' => 'required|unique:categorias|min:6',
         ]);
 
         if ($validator->fails()) {

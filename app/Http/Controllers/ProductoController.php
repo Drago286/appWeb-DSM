@@ -73,25 +73,6 @@ class ProductoController extends Controller
 
 
 
-        // $producto = new Producto;
-        // $producto->codigo = $request->codigo;
-        // $producto->nombre = $request->nombre;
-        // $producto->descripcion = $request->descripcion;
-        // $producto->precio = $request->precio;
-        // $producto->categoria_id = $request->categoria_id;
-        // $producto->stock = $request->stock;
-
-
-        // Producto::create([
-        //     'codigo' => $producto->codigo,
-        //     'nombre' => $producto->nombre,
-        //     'descripcion' => $producto->descripcion,
-        //     'precio' => $producto->precio,
-        //     'stock' => $producto->stock,
-        //     'categoria_id' => $producto->categoria_id,
-
-        // ]);
-
         return response()->json([
             'status' => 200,
             'message' => 'Producto agregado successfully',
