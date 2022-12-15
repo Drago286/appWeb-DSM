@@ -49,7 +49,7 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|unique:categorias',
+            'nombre' => 'required|unique:categorias|min:5',
         ]);
 
         if ($validator->fails()) {
@@ -65,7 +65,6 @@ class CategoriaController extends Controller
             'status' => 200,
             'message' => 'categoria agregado successfully',
         ]);
-
     }
 
     /**
@@ -100,7 +99,7 @@ class CategoriaController extends Controller
     public function update(Request $request, Categoria $categoria)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|unique:categorias',
+            'nombre' => 'required|unique:categorias|min:6',
         ]);
 
         if ($validator->fails()) {

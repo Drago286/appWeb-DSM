@@ -40,7 +40,7 @@ class MesaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'numero' => 'required|unique:mesas',
+            'numero' => 'required|unique:mesas|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -90,7 +90,7 @@ class MesaController extends Controller
     public function update(Request $request, Mesa $mesa)
     {
         $validator = Validator::make($request->all(), [
-            'numero' => 'required|unique:mesas',
+            'numero' => 'required|unique:mesas|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -103,11 +103,12 @@ class MesaController extends Controller
         $mesa = Mesa::where('id', $request->id)->FirstOrFail();
 
         $mesa->numero = $request->numero;
+
         $mesa->save();
 
         return response()->json([
             'status' => 200,
-            'message' => 'categoria editada successfully',
+            'message' => 'mesa editada successfully',
         ]);
     }
 

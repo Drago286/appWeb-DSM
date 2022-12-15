@@ -45,8 +45,8 @@ class ProductoController extends Controller
             'codigo' => 'required|unique:productos',
             'nombre' => 'required|unique:productos',
             'descripcion' => 'required',
-            'precio' => 'required|min:1',
-            'stock' => 'required|min:1',
+            'precio' => 'required|min:1|numeric',
+            'stock' => 'required|min:1|numeric',
             'categoria_id' => 'required',
 
         ]);
@@ -136,7 +136,21 @@ class ProductoController extends Controller
         $producto->stock = $request->stock;
         $producto->categoria_id = $request->categoria_id;
         $producto->imagen = $request->imagen;
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'descripcion' => 'required',
+            'precio' => 'required|min:1|numeric',
+            'stock' => 'required|min:1|numeric',
+            'categoria_id' => 'required',
 
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 100,
+                'message' => $validator->errors(),
+            ]);
+        }
 
         $producto->save();
 
