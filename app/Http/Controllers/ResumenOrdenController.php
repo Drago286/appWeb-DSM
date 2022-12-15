@@ -16,7 +16,7 @@ class ResumenOrdenController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index2()
     {
         $resumen_pedidos = Resumen_orden::all();
         //where('estado', 'PENDIENTE');
@@ -27,6 +27,19 @@ class ResumenOrdenController extends Controller
             //"detalle" => $detalle,
 
         ]);
+    }
+    public function index()
+    {
+        return Resumen_orden::get();
+        // $resumen_pedidos = Resumen_orden::all();
+        // //where('estado', 'PENDIENTE');
+        // //$ordenes = DB::table('resumen_orden_productos')->where('resumen_orden_id', '=', $resumen_pedidos->id)->get();
+
+        // return view("administrarOrdenes")->with([
+        //     "resumen_pedidos" => $resumen_pedidos
+        //     //"detalle" => $detalle,
+
+        // ]);
     }
     /**
      * Retorna el resumen_orden segun el ID recibido
@@ -51,8 +64,10 @@ class ResumenOrdenController extends Controller
             'order' => [
 
                 'montoTotal' => $request->montoTotal,
+                'tiempo' => $request->tiempo,
                 'mesa_id' => $request->mesa_id,
-                'estado' => $request->estado
+                'estado' => $request->estado,
+
 
             ],
             'detallesOrden' => $request->resumen_orden_productos
@@ -72,7 +87,7 @@ class ResumenOrdenController extends Controller
             ]);
         }
 
-        return Resumen_orden_producto::get();
+        return response()->json(['isSuccess' => true, 'id' => $order->id]);
     }
     /**
      * RETORNA los pedidos donde el estado sea PENDIENTE
@@ -90,13 +105,11 @@ class ResumenOrdenController extends Controller
      * @param [type] $id
      * @return void
      */
-    public function atenderOrden($id)
+    public function atenderOrden(Request $request, Resumen_orden $pedido)
     {
-
-        $pedido = Resumen_orden::where('id', $id)->get()->first();
-
+        $pedido->tiempo = $request->tiempo_pedido;
         $pedido->estado = 'EN PREPARACION';
         $pedido->save();
-        return redirect(route('index'));
+        return redirect()->route('asignar-tiempo');
     }
 }

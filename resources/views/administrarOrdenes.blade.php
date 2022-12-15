@@ -19,7 +19,7 @@
 
 
     <div class="container">
-        <h4 class ="mt-3">Resumen de pedidos</h4>
+        <h4 class="mt-3">Resumen de pedidos</h4>
         <div class="row">
             <div class="col-xl-12">
                 <div class="table-responsive">
@@ -47,7 +47,7 @@
                                             data-bs-target="#Modal-{{ $pedido->id }}">Ver detalle</button></td>
 
                                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#Tiempo-{{ $pedido->id }}">Atender</button></td>
+                                            data-bs-target="#Tiempo-{{ $pedido->id }}">Atender</button></td>
                                 </tr>
                                 <div class="modal fade" id="Modal-{{ $pedido->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,9 +63,10 @@
 
                                                 <div>Productos:</div>
                                                 @foreach ($pedido->detallesOrden as $detalle)
-                                                    <p>{{ $detalle->cantidad }}x  {{ $detalle->productoId->nombre }}
-                                                        || Monto: ${{ $detalle->productoId->precio * $detalle->cantidad }}
-                                                        || SG: {{$detalle->productoId->codigo}}
+                                                    <p>{{ $detalle->cantidad }}x {{ $detalle->productoId->nombre }}
+                                                        || Monto:
+                                                        ${{ $detalle->productoId->precio * $detalle->cantidad }}
+                                                        || SG: {{ $detalle->productoId->codigo }}
                                                     </p>
                                                 @endforeach
 
@@ -79,30 +80,48 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form class="formulario" method="GET"
-                                                    action="{{ route('atenderOrden', ['id' => $pedido->id]) }}">
-                                <div class="modal fade" id="Tiempo-{{ $pedido->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Por favor indique el tiempo de preparacion del pedido:</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
+                                <form  method="POST"
+                                    action="{{ route('atenderOrden', $pedido) }}">
+                                    @csrf
+                                    <div class="modal fade" id="Tiempo-{{ $pedido->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Por favor
+                                                        indique el tiempo de preparacion del pedido:</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <select id="tiempo_pedido" name="tiempo_pedido" required
+                                                        class="form-select @error('tiempo_pedido') is-invalid @enderror"
+                                                        aria-label="Default select example"
+                                                        value="{{ old('tiempo_pedido') }}" required
+                                                        autocomplete="tiempo_pedido" autofocus required>
 
-                                                <input type="numeric" placeholder="Tiempo de preparación">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="submit"  class="btn btn-primary">Atender pedido</button>
+                                                        <option value="15">15 minutos</option>
+                                                        <option value="30">30 minutos</option>
+                                                        <option value="45">45 minutos</option>
+                                                        <option value="60">1:00hrs</option>
+                                                        <option value="75">1:15hrs</option>
+                                                        <option value="90">1:30hrs</option>
+                                                        <option value="105">1:45hrs</option>
+                                                        <option value="120">2:00hrs</option>
+
+                                                    </select>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Atender
+                                                        pedido</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
                             @endforeach
 
                         </tbody>
@@ -116,6 +135,8 @@
 </body>
 
 <script>
+     const boton = document.getElementById("boton");
+                const form = document.getElementById("form");
     const formulariosAtender = document.getElementsByClassName("formularioAtender");
 
     for (const form of formulariosAtender) {

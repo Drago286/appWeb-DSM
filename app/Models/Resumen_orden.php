@@ -14,7 +14,10 @@ class Resumen_orden extends Model
     protected $fillable = [
 
         'mesa_id',
+        'tiempo',
         'montoTotal',
+        'estado',
+
 
     ];
 
@@ -24,7 +27,8 @@ class Resumen_orden extends Model
         return $this->belongsTo(Mesa::class, 'mesa_id');;
     }
 
-    public function detallesOrden(){
-        return $this->hasMany(Resumen_orden_producto::class,'resumen_orden_id');
+    public function detallesOrden()
+    {
+        return $this->hasMany(Resumen_orden_producto::class, 'resumen_orden_id');
     }
 }

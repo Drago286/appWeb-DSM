@@ -18,6 +18,8 @@ return new class extends Migration
 
             $table->integer('montoTotal');
 
+            $table->integer('tiempo');
+
             $table->unsignedBigInteger('mesa_id');
 
             $table->enum('estado', ['PENDIENTE', 'EN PREPARACION', 'FINALIZADA']);
