@@ -16,27 +16,7 @@
 </head>
 
 <body>
-    <a class="btn btn-primary ml-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-        aria-controls="offcanvasExample">
-        Filtra pedidos
-    </a>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Opciones:</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div>
-                Por favor, seleccione una opcion para filtrar los pedidos disponibles.
-            </div>
-            <div class="dropdown mt-3">
-                <li><a href="#">Todos los pedidos</a></li>
-                <li><a href="#">Pedidos pendientes</a></li>
-                <li><a href="#">Pedidos finalizados</a></li>
 
-            </div>
-        </div>
-    </div>
 
     <div class="container">
         <h4 class ="mt-3">Resumen de pedidos</h4>

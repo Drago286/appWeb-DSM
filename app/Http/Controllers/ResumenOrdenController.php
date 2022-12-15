@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class ResumenOrdenController extends Controller
 {
+    /**
+     * retorna la vista con las lista de ordenes
+     *
+     * @return void
+     */
     public function index()
     {
         $resumen_pedidos = Resumen_orden::all();
@@ -23,27 +28,22 @@ class ResumenOrdenController extends Controller
 
         ]);
     }
+    /**
+     * Retorna el resumen_orden segun el ID recibido
+     */
 
     public function detallesOrden(int $resumen_orden_id)
     {
-        // $ordenes = Resumen_orden_producto::where('resumen_orden_id', '2');
-        // $id = $idOrden->id_;
 
         $ordenes = DB::table('resumen_orden_productos')->where('resumen_orden_id', '=', $resumen_orden_id)->get();
-        //$orden = DB::table('resumen_orden_productos')->where('resumen_orden_id', $idOrden)->value('producto_id');
 
-        // foreach ($orden as $orden_) {
-        //     $element['producto_id'] = $orden_->producto_id;
-
-        //     $element['cantidad'] = $orden_->cantidad;
-        // }
-        //$orden = Resumen_orden_producto::all();
-
-        //retornar modal con la informacion del pedido
         return response()->json($ordenes);
     }
 
 
+    /**
+     * Desglosa el REQUEST entre el detalle del pedido, como los productos que posee.
+     */
     public function saveOrder(Request $request)
     {
 
@@ -74,6 +74,9 @@ class ResumenOrdenController extends Controller
 
         return Resumen_orden_producto::get();
     }
+    /**
+     * RETORNA los pedidos donde el estado sea PENDIENTE
+     */
     public function listar_pedidos()
     {
 
@@ -81,6 +84,12 @@ class ResumenOrdenController extends Controller
 
         return view("administrarOrdenes")->with('resumen_ordens', $pedidos);
     }
+    /**
+     * Cambia el estado del pedido a EN PREPARACION
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function atenderOrden($id)
     {
 

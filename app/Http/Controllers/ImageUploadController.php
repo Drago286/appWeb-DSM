@@ -10,12 +10,23 @@ use Illuminate\Validation\Rules\File;
 
 class ImageUploadController extends Controller
 {
+    /**
+     * RETORNA LAS IMAGENES
+     *
+     * @return void
+     */
     public function index()
     {
         return Imagen::get();
 
         //
     }
+    /**
+     * Valida y guarda la imagen obtenida desde el frontend
+     *
+     * @param Request $request
+     * @return void
+     */
     public function uploadImage(Request $request)
     {
 

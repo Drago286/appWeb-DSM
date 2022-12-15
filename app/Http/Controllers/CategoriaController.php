@@ -66,30 +66,6 @@ class CategoriaController extends Controller
             'message' => 'categoria agregado successfully',
         ]);
 
-
-
-        //   $categoria = new Categoria;
-        //     $categoria->nombre = $request->nombre;
-
-
-        // try {
-        //     DB::beginTransaction();
-        //     Categoria::create($data);
-        //     DB::commit();
-        //     return response()->json([
-        //         'status' => 200,
-        //         'message' => 'categoria agregado successfully',
-        //     ]);
-        // } catch (Exception $e) {
-        //     DB::rollBack();
-        //     throw new Exception($e->getMessage());
-        // }
-
-        // Categoria::create([
-        //     'nombre' => $categoria->nombre,
-        // ]);
-
-
     }
 
     /**
